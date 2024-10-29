@@ -1,29 +1,31 @@
-const { default: mongoose } = require('mongoose');
-
+<<<<<<< Updated upstream
 const app = require('express')();
+
+app.get('/', (req, res) => {
+  res.json('Hello World');
+});
+
+app.listen(8000, () => {
+  console.log('Start Server');
+=======
+const express = require('express');
+// const mongoose = require('mongoose');
+const app = express();
+const { PORT, MONGO_URL } = process.env;
 
 const apiRouter = require('./routers/apiRouter');
 
-const { PORT, MONGO_URL } = process.env;
-
-app.use('/', apiRouter);
-
-app.listen(PORT, () => {
-  console.log(`Start Server ${PORT}`);
-  ConnectDB();
-});
-
-const ConnectDB = () => {
-  mongoose
-    .set('debug', true)
-    .set('strictQuery', true)
-    .connect(MONGO_URL)
-    .then(() => console.log('connected MongoDB'))
-    .catch((error) => {
-      console.error('MongoDB connection error:', error.message);
-    });
-};
-const _Error = (err, res) => {
+// const ConnectDB = () => {
+  // mongoose
+  //   .set('debug', true)
+  //   .set('strictQuery', true)
+  //   .connect(MONGO_URL+'/users')
+  //   .then(() => console.log('connected MongoDB'))
+  //   .catch((err) => {
+  //     console.error('MongoDB connection error:', err.message);
+  //   });
+// };
+const _Error = (err, req, res, next) => {
   const statusCode = err.status || 500;
   const errorMessage = err.message || 'Internal Server Error';
 
@@ -31,4 +33,15 @@ const _Error = (err, res) => {
     message: errorMessage,
     status: statusCode,
   });
-}
+};
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use('/', apiRouter);
+app.use(_Error);
+
+app.listen(PORT, () => {
+  console.log(`Start Server ${PORT}`);
+  ConnectDB();
+>>>>>>> Stashed changes
+});

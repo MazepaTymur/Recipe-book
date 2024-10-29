@@ -5,9 +5,15 @@ module.exports = {
   emailIsAlreadyRegistered: async (req, res, next) => {
     try {
       const { email } = req.body;
+      if (!email) {
+        next(new ApiError(401, 'Incorrect email.'));
+      }
+
       const user = await userServise.Find({ email });
       if (user) {
-        return next(
+        console.log('UM', user);
+
+        next(
           new ApiError(
             409,
             'Email is already registered. Please use another email or log in.'
