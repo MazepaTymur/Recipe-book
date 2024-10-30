@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const { usersDB } = require('./connections');
 
 const userSchema = new Schema({
   email: { type: String, required: true },
@@ -8,4 +7,4 @@ const userSchema = new Schema({
   access: [{ type: String, default: 'user' }],
 });
 
-module.exports = usersDB.model('users', userSchema);
+module.exports = model('User', userSchema);

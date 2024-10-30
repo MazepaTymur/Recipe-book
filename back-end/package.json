@@ -1,16 +1,12 @@
 {
   "dependencies": {
-<<<<<<< Updated upstream
-    "express": "^4.21.1"
-=======
     "bcrypt": "^5.1.1",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.10.0",
     "mongoose": "^8.7.3"
->>>>>>> Stashed changes
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "node --env-file=.env app.js"
   }
 }

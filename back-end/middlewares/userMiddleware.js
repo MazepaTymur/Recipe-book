@@ -1,4 +1,4 @@
-const userServise = require('../servises/userServise');
+const userService = require('../services/userService');
 const ApiError = require('./apiError');
 
 module.exports = {
@@ -9,7 +9,7 @@ module.exports = {
         next(new ApiError(401, 'Incorrect email.'));
       }
 
-      const user = await userServise.Find({ email });
+      const user = await userService.Find({ email });
       if (user) {
         console.log('UM', user);
 
@@ -30,7 +30,7 @@ module.exports = {
       const { email, _id } = req.body;
 
       if (email || _id) {
-        const user = await userServise.Find(email ? { email } : { _id });
+        const user = await userService.Find(email ? { email } : { _id });
 
         if (!user) {
           return next(new ApiError(404, 'User not found'));
