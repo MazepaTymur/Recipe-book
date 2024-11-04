@@ -12,9 +12,33 @@ router.post(
 router.post(
   '/login',
   userMiddleware.userNotFound,
-  authMiddleware.checkPassword,
+  authMiddleware.passwordCheck,
   userController.loginUser
 );
-router.post('/auth', authMiddleware.tokenVerification);
+router.post(
+  '/auth/token',
+  authMiddleware.tokenVerification('access'),
+  userMiddleware.userNotFound,
+  userController.getUser
+);
+router.post(
+  '/auth/refresh',
+  authMiddleware.tokenVerification('refresh'),
+  userMiddleware.userNotFound,
+  userController.loginUser
+);
+router.put(
+  '/changeNickname',
+  authMiddleware.tokenVerification('access'),
+  userMiddleware.userNotFound,
+  userController.changeNickname
+);
+router.delete(
+  '/deleteAccount',
+  authMiddleware.tokenVerification('access'),
+  userMiddleware.userNotFound,
+  authMiddleware.passwordCheck,
+  userController.deleteUser
+);
 
 module.exports = router;

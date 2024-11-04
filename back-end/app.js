@@ -7,18 +7,18 @@ const apiRouter = require('./routers/apiRouter');
 
 const _connectDB = () => {
   mongoose
-    .set('debug', true)
+    .set('debug', false)
     .set('strictQuery', true)
-    .connect(MONGO_URL+'/RecipeBook')
+    .connect(MONGO_URL + '/RecipeBook')
     .then(() => console.log('+ MongoDB success'))
     .catch((error) => {
       console.log('err', error.message);
       process.exit(1);
     });
-}
+};
 const _Error = (err, req, res, next) => {
   const statusCode = err.status || 500;
-  const errorMessage = err.message || 'Internal Server Error';
+  const errorMessage = err.message || 'Internal Server Error.';
 
   res.status(statusCode).json({
     message: errorMessage,

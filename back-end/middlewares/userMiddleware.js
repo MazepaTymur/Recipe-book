@@ -8,11 +8,8 @@ module.exports = {
       if (!email) {
         next(new ApiError(401, 'Incorrect email.'));
       }
-
       const user = await userService.Find({ email });
       if (user) {
-        console.log('UM', user);
-
         next(
           new ApiError(
             409,
@@ -31,7 +28,6 @@ module.exports = {
 
       if (email || _id) {
         const user = await userService.Find(email ? { email } : { _id });
-
         if (!user) {
           return next(new ApiError(404, 'User not found'));
         }
